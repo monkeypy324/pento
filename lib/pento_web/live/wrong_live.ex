@@ -5,18 +5,13 @@ defmodule PentoWeb.WrongLive do
 
   alias Phoenix.LiveView.Socket
 
-  alias Pento.Accounts
-
   @spec mount(any, any, Socket.t()) :: {:ok, Socket.t()}
   def mount(_params, session, socket) do
-    user = Accounts.get_user_by_session_token(session["user_token"])
-
     socket
     |> assign(:score, 0)
     |> assign(:message, "Make a guess: ")
     |> assign(:actual, rand_num())
     |> assign(:session_id, session["live_socket_id"])
-    |> assign(:current_user, user)
     |> then(&{:ok, &1})
   end
 
